@@ -52,6 +52,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import sys  # SYS, for exiting the shell properly
 from urllib.request import urlopen  # for getting stuff from URLs
 import tempfile  # For creating temporary cache files
+
 # import random # For randomization
 import logging  # For debug/logs
 import os
@@ -66,14 +67,14 @@ from PyQt5.QtWidgets import *
 # Custom imports
 from . import jsonparser
 
-if not os.path.exists("~/.bananastore/logs/"):
-    os.makedirs("~/.bananastore/logs/")
+USER = os.getenv("USER")
+
+if not os.path.exists(f"/home/{USER}/.bananastore/"):
+    os.makedirs(f"/home/{USER}/.bananastore/")
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
-    filename="~/.bananastore/logs/latest.log",
-    filemode="w",
 )
 
 
@@ -107,7 +108,7 @@ def url_to_qpixmap(url: str, width: int, height: int) -> QPixmap:
 class QAppDownloadWidget(QWidget):
     def __init__(
         self,
-        name: str = "NRC_History",
+        name: str = "Tuxemon",
         baseurl: str = "https://github.com/TheBananaStore/TheBananaStore/raw/main/",
     ):
         super().__init__()
@@ -115,7 +116,7 @@ class QAppDownloadWidget(QWidget):
 
         imagelabel = QLabel()
         print(f"downloading image for {name}")
-        imagelabel.setPixmap(url_to_qpixmap(baseurl + f"icons/64/{name}.png",  64, 64))
+        imagelabel.setPixmap(url_to_qpixmap(baseurl + f"icons/64/{name}.png", 64, 64))
         logging.debug(f"Downloaded image for {name}")
         button = QPushButton("Install")
 
@@ -148,7 +149,7 @@ class MainWindow(QMainWindow):
         for app in jsonparser.get_applist(
             "https://github.com/thebananastore/thebananastore/raw/main/index.json"
         ):
-            loop += 1
+            loop += 1  # This is temporary
             layout.addWidget(QAppDownloadWidget(app["codename"]), loop, 0)
 
         widget.setLayout(layout)
@@ -162,13 +163,15 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    
+
     if not platform.system().startswith("Linux"):
-        print("Sorry, but the banana client does not support non-Linux OSes. Enjoy your prioprietary system.")
-    
-    app = QApplication(sys.argv) # Start an instance of QApplication
+        print(
+            "Sorry, but the banana client does not support non-Linux OSes. Enjoy your prioprietary system."
+        )
 
-    window = MainWindow() # Start the main window
-    window.show() # IMPORTANT: Windows are hidden by default
+    app = QApplication(sys.argv)  # Start an instance of QApplication
 
-    app.exec() # Start the event loop
+    window = MainWindow()  # Start the main window
+    window.show()  # IMPORTANT: Windows are hidden by default
+
+    app.exec()  # Start the event loop
