@@ -15,11 +15,6 @@ banana\_client.api module
 banana\_client.jsonparser module
 --------------------------------
 
-.. automodule:: banana_client.jsonparser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

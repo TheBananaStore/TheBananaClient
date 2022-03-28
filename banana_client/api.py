@@ -23,6 +23,9 @@ import json
 
 # ----------Errors----------
 class InvalidChannelError(Exception):
+    """
+    Exception raised when a channel is not correct in get_applist
+    """
     def __init__(self):
         Exception.__init__(self, 'Invalid channel name selected. Please use available channel names.')
 
@@ -34,6 +37,7 @@ def _get_index() -> dict:
 def get_applist(channel = "stable") -> dict:
     """
     Get the Banana Store's App List.
+
     Parameters
     ----------
     channel

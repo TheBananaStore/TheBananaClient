@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'The Banana Client'
-copyright = '2022, Alexey Pavlov'
+copyright = '2022, The Banana Team'
 author = 'Alexey Pavlov'
 
 # The full version, including alpha/beta/rc tags
