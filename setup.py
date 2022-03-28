@@ -39,5 +39,5 @@ setup(
         "Topic :: Desktop Environment"
     ],
     keywords="banana, store, thebananastore, bananaclient",
-    packages=["banana-client"],
+    packages=["banana_client"],
 )
