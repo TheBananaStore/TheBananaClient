@@ -1,4 +1,4 @@
-'''
+"""
 Copyright (C) 2022  Alexey Pavlov <pezleha@gmail.com>
 
 This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-'''
+"""
 
 # Imports
 from urllib.request import urlopen
@@ -26,25 +26,33 @@ class InvalidChannelError(Exception):
     """
     Exception raised when a channel is not correct in get_applist
     """
+
     def __init__(self):
-        Exception.__init__(self, 'Invalid channel name selected. Please use available channel names.')
+        Exception.__init__(
+            self, "Invalid channel name selected. Please use available channel names."
+        )
+
 
 # ----------Methods----------
 
-def _get_index() -> dict:
-    return json.loads(urlopen("http://thebananastore.github.io/TheBananaStore/" + "index.json").read())
 
-def get_applist(channel = "stable") -> dict:
+def _get_index() -> dict:
+    return json.loads(
+        urlopen("http://thebananastore.github.io/TheBananaStore/" + "index.json").read()
+    )
+
+
+def get_applist(channel="stable") -> dict:
     """
     Get the Banana Store's App List.
 
     Parameters
     ----------
     channel
-        A string indicating the channel to check. Can be "stable", "unstable", or "testing".
+        A string indicating the channel to check. Can be ``stable``, ``unstable``, or ``testing``.
     """
-    
-    if channel not in ["stable",  "testing",  "unstable"]:
+
+    if channel not in ["stable", "testing", "unstable"]:
         raise InvalidChannelError
-    
+
     return _get_index()[channel.lower()]
