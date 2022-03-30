@@ -1,14 +1,25 @@
+<br/>
+<p align="center">
+  <a href="https://github.com/TheBananaStore/TheBananaClient">
+    <img src="https://docs.thebananastore.cf/projects/dev/en/latest/_static/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-<center>
+  <h3 align="center">The Banana Client</h3>
 
-<img src="https://docs.thebananastore.cf/projects/dev/en/latest/_static/logo.png">
-<h1>
-The Banana Store
-</h1>
-</center>
+  <p align="center">
+    Client for the Banana Store!
+    <br/>
+    <br/>
+    <a href="bananaclient.rtfd.io"><strong>Explore the docs »</strong></a>
+    <br/>
+    <br/>
+    <a href="https://github.com/TheBananaStore/TheBananaClient/issues">Report Bug</a>
+    .
+    <a href="https://github.com/TheBananaStore/TheBananaClient/issues">Request Feature</a>
+  </p>
+</p>
 
-
-This is the repository for the client. It is in heavy development so do not expect for it to work.
+![Downloads](https://img.shields.io/github/downloads/TheBananaStore/TheBananaClient/total) ![Contributors](https://img.shields.io/github/contributors/TheBananaStore/TheBananaClient?color=dark-green) ![Stargazers](https://img.shields.io/github/stars/TheBananaStore/TheBananaClient?style=social) ![Issues](https://img.shields.io/github/issues/TheBananaStore/TheBananaClient) ![License](https://img.shields.io/github/license/TheBananaStore/TheBananaClient) 
 ## Features
 TODO
 <!--
