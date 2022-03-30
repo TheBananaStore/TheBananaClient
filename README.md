@@ -1,8 +1,13 @@
 
-<center><img src="https://docs.thebananastore.cf/projects/dev/en/latest/_static/logo.png"></center>
+<center>
+
+<img src="https://docs.thebananastore.cf/projects/dev/en/latest/_static/logo.png">
+<h1>
+The Banana Store
+</h1>
+</center>
 
 
-# The Banana Client
 This is the repository for the client. It is in heavy development so do not expect for it to work.
 ## Features
 TODO
