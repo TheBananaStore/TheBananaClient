@@ -64,6 +64,7 @@ html_theme_options = {
     "use_edit_page_button": True,
     "search_bar_text": "Search API Docs...",
     "external_links": [{"name": "User docs", "url": "https://bananadocs.rtfd.io"}],
+    "footer_items": ["copyright", "sphinx-version", "last-updated", "search-field"],
 }
 html_context = {
     "github_user": "TheBananaStore",
