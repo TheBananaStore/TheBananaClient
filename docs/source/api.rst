@@ -1,1 +1,5 @@
-.. autofunction:: banana_client.api.get_applist
+API documentation
+=============================================
+
+.. automodule:: banana_client.api
+   :members:

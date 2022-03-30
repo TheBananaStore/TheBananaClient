@@ -1,20 +1,15 @@
-.. The Banana Client documentation master file, created by
-   sphinx-quickstart on Mon Mar 28 07:26:38 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to The Banana Client's documentation!
 =============================================
+
+This is the "Developer" documentation for the API inside the code, and it documents the GUI and its features aswell.
+
+
+Table Of Contents
+-----------------
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   api
+   errors

@@ -63,6 +63,7 @@ html_theme_options = {
     "twitter_url": "https://twitter.com/TheBananaStore",
     "use_edit_page_button": True,
     "search_bar_text": "Search API Docs...",
+    "external_links": [{"name": "User docs", "url": "https://bananadocs.rtfd.io"}],
 }
 html_context = {
     "github_user": "TheBananaStore",
