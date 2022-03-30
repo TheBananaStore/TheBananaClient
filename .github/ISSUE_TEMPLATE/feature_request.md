@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an feature or app for the Banana Store
-title: ''
+title: 'Feature/App requested'
 labels: enhancement
 assignees: ''
 
