@@ -21,7 +21,7 @@
 # Imports
 from urllib.request import urlopen
 import json
-from difflib import get_close_matches
+import re
 
 # ----------Errors----------
 class InvalidChannelError(Exception):
@@ -35,17 +35,30 @@ class InvalidChannelError(Exception):
         Exception.__init__(
             self, "Invalid channel name selected. Please use available channel names."
         )
+        
+class FilenameNotSpecifiedError(Exception):
+    """
+    Exception raised when a filename is not specified.
+    
+    :meta private:
+    """
+
+    def __init__(self):
+        Exception.__init__(
+            self, "Filename is not specified, or the default one is used."
+        )
 
 
-# ----------Methods----------
+# ----------Private Methods----------
 
 
 def _get_index() -> dict:
     """
     Returns JSON loaded into a dict from the mirror
     """
-    return json.loads(urlopen("http://mirror.thebananastore.cf" + "index.json").read())
+    return json.loads(urlopen("http://mirror.thebananastore.cf/" + "index.json").read())
 
+# ----------Public Methods----------
 
 def get_appindex(channel: str = "stable") -> dict:
     """
@@ -79,22 +92,43 @@ def get_app_name_list(channel: str = "stable") -> list:
     index = get_appindex(channel)
 
     for app in index:
-        applist.append(index[app]["name"])
+        applist.append(app["name"])
 
     return applist
 
 
-def search_applist(query: str) -> list:
+def search_appindex(query: str,  download: bool = False,  filename: str = "/fake",  channel: str = "stable") -> list:
     """
-    Get the closest matches for the apps.
-    Currently it re-downloads the index again. 
+    Get the closest matches for the apps. Searches the names, description, and the website.
 
     Parameters:
     
     * query
         A string for the query.
+    * download
+        A boolean, if ``True``, it re-downloads the index. Elseway, it takes a path from ``filename``.
+    * filename
+        Only needed if ``download`` parameter is set to ``False``. Path to the already-downloaded index.
+    * channel
+        Only needed if ``download`` is set to ``True``. Channel for downloading the index from. Default is ``"stable"``
     """
     
-    # TODO: collect everything from a local file
+    if download == False and filename in ["",  "/fake"]:
+        raise FilenameNotSpecifiedError
+    
+    if download:
+        namelist = get_appindex(channel)
+    else:
+        with open(filename) as file:
+            namelist = list()
+            namelist = json.loads(file.read())
+    
+    results = list()
+    for appname in namelist:
+        for field in ["name", "description",  "website"]:
+            result = re.search(query, appname[field],  flags=re.IGNORECASE)
+            if result != None and appname not in results:
+                results.append(appname["name"])
 
-    return get_close_matches(query, get_app_name_list())
+    return results
+    

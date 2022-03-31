@@ -9,3 +9,8 @@ Available errors
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. autoexception:: banana_client.api.FilenameNotSpecifiedError
+   :members:
+   :undoc-members:
+   :show-inheritance:
