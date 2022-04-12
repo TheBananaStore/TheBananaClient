@@ -20,8 +20,57 @@ import subprocess
 import os_release
 
 
+class PackageManagerNotFoundError(Exception):
+    """
+    Exception raised when a supported package manager is not found.
+    
+    :meta private:
+    """
+
+    def __init__(self):
+        Exception.__init__(
+            self,
+            "No dependency-resolving package manager was found. Please install one from the list on the official documentation.",
+        )
+
+
+class OSNotSupportedError(Exception):
+    """
+    Exception raised when a OS is not supported.
+    
+    :meta private:
+    """
+
+    def __init__(self):
+        Exception.__init__(
+            self,
+            "The OS you are using is not supported or the os-release file is incorrect.",
+        )
+
+
 def install_packages(pkgs: list):
+
     release = os_release.current_release()
 
     if release.is_like("debian"):
-        subprocess.call(["sudo", "/usr/bin/apt", "install"] + pkgs)
+        if os.path.exists("usr/bin/apt"):
+            subprocess.call(["/usr/bin/apt", "install", "-y"] + pkgs)
+        elif os.path.exists("/usr/bin/aptitude"):
+            subprocess.call(["/usr/bin/aptitude", "install", "-y"] + pkgs)
+        else:
+            raise PackageManagerNotFoundError
+    elif release.is_like("rhel"):
+        if os.path.exists("/usr/bin/dnf"):
+            subprocess.call(["/usr/bin/dnf", "install"] + pkgs)
+        elif os.path.exists("/usr/bin/yum"):
+            subprocess.call(["/usr/bin/yum", "install"] + pkgs)
+        else:
+            raise PackageManagerNotFoundError
+    elif release.is_like("arch"):
+        if os.path.exists("/usr/bin/pacman"):
+            subprocess.call(["/usr/bin/pacman", "-S"] + pkgs)
+        else:
+            raise PackageManagerNotFoundError
+
+    else:
+        raise OSNotSupportedError
