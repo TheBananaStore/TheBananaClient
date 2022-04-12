@@ -1,1 +1,1 @@
-__all__ = ["jsonparser", "asciilogo", "api"]
+__all__ = ["asciilogo", "api", "scriptutils"]

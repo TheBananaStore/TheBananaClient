@@ -35,7 +35,8 @@ class InvalidChannelError(Exception):
         Exception.__init__(
             self, "Invalid channel name selected. Please use available channel names."
         )
-        
+
+
 class FilenameNotSpecifiedError(Exception):
     """
     Exception raised when a filename is not specified.
@@ -58,7 +59,9 @@ def _get_index() -> dict:
     """
     return json.loads(urlopen("http://mirror.thebananastore.cf/" + "index.json").read())
 
+
 # ----------Public Methods----------
+
 
 def get_appindex(channel: str = "stable") -> dict:
     """
@@ -97,7 +100,9 @@ def get_app_name_list(channel: str = "stable") -> list:
     return applist
 
 
-def search_appindex(query: str,  download: bool = False,  filename: str = "/fake",  channel: str = "stable") -> list:
+def search_appindex(
+    query: str, download: bool = False, filename: str = "/fake", channel: str = "stable"
+) -> list:
     """
     Get the closest matches for the apps. Searches the names, description, and the website.
 
@@ -112,23 +117,22 @@ def search_appindex(query: str,  download: bool = False,  filename: str = "/fake
     * channel
         Only needed if ``download`` is set to ``True``. Channel for downloading the index from. Default is ``"stable"``
     """
-    
-    if download == False and filename in ["",  "/fake"]:
+
+    if download == False and filename in ["", "/fake"]:
         raise FilenameNotSpecifiedError
-    
+
     if download:
         namelist = get_appindex(channel)
     else:
         with open(filename) as file:
             namelist = list()
             namelist = json.loads(file.read())
-    
+
     results = list()
     for appname in namelist:
-        for field in ["name", "description",  "website"]:
-            result = re.search(query, appname[field],  flags=re.IGNORECASE)
+        for field in ["name", "description", "website"]:
+            result = re.search(query, appname[field], flags=re.IGNORECASE)
             if result != None and appname not in results:
                 results.append(appname["name"])
 
     return results
-    

@@ -20,6 +20,7 @@ setup(
     maintainer_email="",
     url="https://thebananastore.cf",
     download_url="https://github.com/thebananastore/thebananaclient",
+    install_requires=["os-release"],
     classifiers=[
         # License
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
