@@ -49,6 +49,10 @@ class OSNotSupportedError(Exception):
         )
 
 def get_package_manager() -> str:
+    """
+    Get the preferred OS package manager as a string.
+    """
+    
     release = os_release.current_release()
 
     if release.is_like("debian"):
@@ -103,7 +107,7 @@ def install_packages(pkgs: list):
     """
     
     manager = get_package_manager()
-    args = get_package_manager_install_arguments()
+    args = get_package_manager_install_arguments(manager)
     
     subprocess.call([manager,  args] + pkgs)
         
