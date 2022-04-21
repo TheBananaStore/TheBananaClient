@@ -14,3 +14,13 @@ Available errors
    :members:
    :undoc-members:
    :show-inheritance:
+   
+.. autoexception:: banana_client.scriptutils.PackageManagerNotFoundError
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. autoexception:: banana_client.scriptutils.OSNotSupportedError
+   :members:
+   :undoc-members:
+   :show-inheritance:

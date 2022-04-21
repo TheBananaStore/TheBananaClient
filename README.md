@@ -49,6 +49,11 @@ For support, email thebananastore@protonmail.com or join our [Discord channel](h
 
 Don't drink Red Bull with bananas.
 
+## Sources
+
+
+- [OS-Release list](https://github.com/chef/os_release)
+
 ## License
 
 [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)

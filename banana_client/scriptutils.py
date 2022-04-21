@@ -15,6 +15,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+import os
 import subprocess
 
 import os_release
@@ -47,30 +48,62 @@ class OSNotSupportedError(Exception):
             "The OS you are using is not supported or the os-release file is incorrect.",
         )
 
-
-def install_packages(pkgs: list):
-
+def get_package_manager() -> str:
     release = os_release.current_release()
 
     if release.is_like("debian"):
         if os.path.exists("usr/bin/apt"):
-            subprocess.call(["/usr/bin/apt", "install", "-y"] + pkgs)
+            return "apt"
         elif os.path.exists("/usr/bin/aptitude"):
-            subprocess.call(["/usr/bin/aptitude", "install", "-y"] + pkgs)
+           return "aptitude"
         else:
             raise PackageManagerNotFoundError
     elif release.is_like("rhel"):
         if os.path.exists("/usr/bin/dnf"):
-            subprocess.call(["/usr/bin/dnf", "install"] + pkgs)
+            return "dnf"
         elif os.path.exists("/usr/bin/yum"):
-            subprocess.call(["/usr/bin/yum", "install"] + pkgs)
+            return "yum"
         else:
             raise PackageManagerNotFoundError
     elif release.is_like("arch"):
         if os.path.exists("/usr/bin/pacman"):
-            subprocess.call(["/usr/bin/pacman", "-S"] + pkgs)
+            return "pacman"
+        else:
+            raise PackageManagerNotFoundError
+    elif release.is_like("gentoo"):
+        if os.path.exists("/usr/bin/emerge"):
+            return "emerge"
         else:
             raise PackageManagerNotFoundError
 
     else:
         raise OSNotSupportedError
+        
+def get_package_manager_install_arguments(manager: str) -> list:
+    
+    if manager in ["apt",  "aptitude",  "dnf",  "yum"]:
+        return ["install",  "-y"]
+        
+    elif manager == "pacman":
+        return ["noconfirm","-S"]
+    elif manager == "emerge":
+        return ["-uD"]
+    else:
+        raise OSNotSupportedError
+def install_packages(pkgs: list):
+    """
+    Install the packages via the system's package manager. 
+    If no compaptible package manager is found, ``OSNotSupportedError`` is raised.
+    If the OS release is detected and is supported but a package manager is not found, ``PackageManagerNotFoundError`` is raised.
+    
+    Parameters:
+    
+    * pkgs
+        A list with package strings.
+    """
+    
+    manager = get_package_manager()
+    args = get_package_manager_install_arguments()
+    
+    subprocess.call([manager,  args] + pkgs)
+        

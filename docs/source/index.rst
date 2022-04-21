@@ -12,4 +12,6 @@ Table Of Contents
    :caption: Contents:
 
    api
+   scriptutils
    errors
+   
