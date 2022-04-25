@@ -22,6 +22,10 @@
 from urllib.request import urlopen
 import json
 import re
+import tempfile
+import sys
+from xonsh.main import setup as setup_xonsh
+import ping3
 
 # ----------Errors----------
 class InvalidChannelError(Exception):
@@ -61,6 +65,49 @@ def _get_index() -> dict:
 
 
 # ----------Public Methods----------
+
+
+def get_mirrors() -> list:
+    """
+    Get mirror domains as a list. Might contain few empty strings
+    """
+    return str(urlopen("http://thebananastore.cf/mirrors.txt").read(), "UTF-8").split(
+        "\n"
+    )
+
+
+def check_mirrors(timeout = 60) -> dict:
+    """
+    Check the mirrors and return a dict with their ping time and domain.
+    
+    Parameters:
+    
+    * timeout
+        Timeout for ping time, in seconds. Defaults to `60`.
+    """
+    return_dict = dict()
+
+    for mirror in get_mirrors():
+        if mirror == "":
+            continue
+        result = ping3.ping(mirror, unit="ms", timeout=timeout)  # A minute timeout
+        if result:
+            return_dict[mirror] = result
+    return return_dict
+
+
+def get_best_mirror() -> tuple:
+    """
+    Gets the fastest available mirror with the domain and ping time.
+    """
+    mirrors = check_mirrors()
+    sorted_mirrors = list(mirrors.items())
+    sorted_mirrors.sort()
+    for mirror in list(mirrors.items()):
+        if mirror > sorted_mirrors[0]:
+            continue
+        elif mirror == sorted_mirrors[0]:
+            return mirror
 
 
 def get_appindex(channel: str = "stable") -> dict:
@@ -136,3 +183,13 @@ def search_appindex(
                 results.append(appname["name"])
 
     return results
+
+
+def install_app(app_name: str): # This doesn't work!
+
+    url = app_name
+    with tempfile.NamedTemporaryFile(suffix="_installtemp", prefix="banana_") as file:
+        file.write(urlopen(url).read())
+        sys.path.append
+
+    setup_xonsh()

@@ -48,18 +48,20 @@ class OSNotSupportedError(Exception):
             "The OS you are using is not supported or the os-release file is incorrect.",
         )
 
+
 def get_package_manager() -> str:
     """
     Get the preferred OS package manager as a string.
+
     """
-    
+
     release = os_release.current_release()
 
     if release.is_like("debian"):
         if os.path.exists("usr/bin/apt"):
             return "apt"
         elif os.path.exists("/usr/bin/aptitude"):
-           return "aptitude"
+            return "aptitude"
         else:
             raise PackageManagerNotFoundError
     elif release.is_like("rhel"):
@@ -82,18 +84,39 @@ def get_package_manager() -> str:
 
     else:
         raise OSNotSupportedError
-        
-def get_package_manager_install_arguments(manager: str) -> list:
+
+
+def get_pkg_manager_args(manager: str, operation) -> list:
+    """
+    Get the passed OS package manager's install arguments
     
-    if manager in ["apt",  "aptitude",  "dnf",  "yum"]:
-        return ["install",  "-y"]
-        
-    elif manager == "pacman":
-        return ["noconfirm","-S"]
-    elif manager == "emerge":
-        return ["-uD"]
-    else:
-        raise OSNotSupportedError
+    Parameters:
+    
+    * manager
+        The package manager, a string.
+    * operation
+        The operation for which you need arguments.
+    """
+
+    if operation == "install":
+        if manager in [
+            "apt",
+            "aptitude",
+            "dnf",
+            "yum",
+        ]:  # All of these use the same flags
+            return ["install", "-y"]
+
+        elif manager == "pacman":  # pacman is always present on Arch, so
+            return ["noconfirm", "-S"]
+        elif (
+            manager == "emerge"
+        ):  # Emerge is dependency-resolving, that's why portage isn't supported
+            return ["-uD"]
+        else:
+            raise OSNotSupportedError
+
+
 def install_packages(pkgs: list):
     """
     Install the packages via the system's package manager. 
@@ -105,9 +128,8 @@ def install_packages(pkgs: list):
     * pkgs
         A list with package strings.
     """
-    
+
     manager = get_package_manager()
-    args = get_package_manager_install_arguments(manager)
-    
-    subprocess.call([manager,  args] + pkgs)
-        
+    args = get_pkg_manager_args(manager)
+
+    subprocess.call([manager, args] + pkgs)
