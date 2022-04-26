@@ -47,7 +47,8 @@ No
 For support, email thebananastore@protonmail.com or join our [Discord channel](https://discord.gg/hSPreCphPV).
 ## Lessons Learned
 
-Don't drink Red Bull with bananas.
+* Don't drink Red Bull with bananas.
+* `click` is awesome!
 
 ## Sources
 

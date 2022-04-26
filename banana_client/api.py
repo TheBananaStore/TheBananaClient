@@ -22,9 +22,9 @@
 from urllib.request import urlopen
 import json
 import re
-import tempfile
+import os
 import sys
-from xonsh.main import setup as setup_xonsh
+import subprocess
 import ping3
 
 # ----------Errors----------
@@ -76,7 +76,7 @@ def get_mirrors() -> list:
     )
 
 
-def check_mirrors(timeout = 60) -> dict:
+def check_mirrors(timeout=60) -> dict:
     """
     Check the mirrors and return a dict with their ping time and domain.
     
@@ -185,11 +185,10 @@ def search_appindex(
     return results
 
 
-def install_app(app_name: str): # This doesn't work!
+def install_app(app_name: str):  # This doesn't work!
 
     url = app_name
-    with tempfile.NamedTemporaryFile(suffix="_installtemp", prefix="banana_") as file:
-        file.write(urlopen(url).read())
-        sys.path.append
+    with open(f"{os.environ['HOME']}/.cache/bananalock.xsh",  "w") as file:
+        file.write(str(urlopen(url).read(),  "UTF-8"))
+        print(subprocess.check_output(["python3",  "-m",  "xonsh",  file.name]))
 
-    setup_xonsh()
