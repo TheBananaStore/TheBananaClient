@@ -186,7 +186,17 @@ def search_appindex(
 
 
 def install_app(app_name: str,  channel: str,  platform_os: str):
-
+    """
+    Install an app.
+    
+    Parameters:
+    * app_name
+        The ID for the app
+    * channel
+        The channel to use, stable, unstable, etc.
+    * platform_os
+        The platform you want the install script for.
+    """
     url = "http://"+get_best_mirror()+f"scripts/{channel}"+app_name+f"{platform_os}-install.xsh"
     with open(f"{os.environ['HOME']}/.cache/bananalock.xsh",  "w") as file:
         file.write(str(urlopen(url).read(),  "UTF-8"))
