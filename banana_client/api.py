@@ -185,9 +185,9 @@ def search_appindex(
     return results
 
 
-def install_app(app_name: str):  # This doesn't work!
+def install_app(app_name: str,  channel: str,  platform_os: str):
 
-    url = app_name
+    url = "http://"+get_best_mirror()+f"scripts/{channel}"+app_name+f"{platform_os}-install.xsh"
     with open(f"{os.environ['HOME']}/.cache/bananalock.xsh",  "w") as file:
         file.write(str(urlopen(url).read(),  "UTF-8"))
         print(subprocess.check_output(["python3",  "-m",  "xonsh",  file.name]))
