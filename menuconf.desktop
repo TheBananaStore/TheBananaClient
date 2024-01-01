@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Banana App Store
+Comment=A Raspberry Pi App Store
+Exec=lxterminal -e bash ~/Banana/main.sh
+Icon=~/Banana/icon.png
+Type=Application
+Categories=Utility;Accessories;
+Terminal=true
+MimeType=text/plain;
