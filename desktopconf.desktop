@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Banana App Store
+Comment=A Raspberry Pi App Store.
+Exec=bash ~/Banana/main.sh
+Icon=~/Banana/icons/logo.png
+Terminal=true
+StartupWMClass=Banana
+Type=Application
+Categories=Utility
+StartupNotify=true
